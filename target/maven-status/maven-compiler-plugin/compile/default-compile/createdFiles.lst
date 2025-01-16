@@ -3,6 +3,7 @@ com\controller\AuthUtil.class
 com\modal\Event.class
 com\controller\SchoolController.class
 com\controller\EventController.class
+com\controller\EquipmentController.class
 com\repository\PageDatabase.class
 com\controller\WebConfig.class
 com\repository\EventDatabase.class
@@ -10,7 +11,9 @@ com\repository\SchoolDatabase.class
 com\controller\UserController.class
 com\modal\DistrictOfficer.class
 com\modal\User.class
+com\repository\EquipmentDatabase.class
 com\modal\Student.class
 com\modal\SchoolAdmin.class
 com\controller\HomeController.class
+com\modal\Equipment.class
 com\modal\Page.class

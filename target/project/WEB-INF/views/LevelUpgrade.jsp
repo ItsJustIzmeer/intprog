@@ -29,18 +29,26 @@
 				<div class="box">
 					<div class="program-container">
 						<form>
-							<div class="form-category">
+							<div class="form-container">
 								<div class="inline-group">
 									<div class="form-group">
-										<label for="schoolLevel">Latest School Level</label> <select
+										<label for="schoolLevel">Latest School Version</label> <select
 											name="schoolLevel" id="cars">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
+											<option value="1">Level 1</option>
+											<option value="2">Level 2</option>
+											<option value="3">Level 3</option>
+											<option value="4">Level 4</option>
 										</select>
 									</div>
-									<div class="form-group"></div>
+									<div class="form-group">
+										<label for="schoolLevel">Upgrade School Version</label> <select
+											name="schoolLevel" id="cars">
+											<option value="1">Level 1</option>
+											<option value="2">Level 2</option>
+											<option value="3">Level 3</option>
+											<option value="4">Level 4</option>
+										</select>
+									</div>
 								</div>
 								<div class="form-group">
 									<label for="upgradeLevelComment">Comment</label>

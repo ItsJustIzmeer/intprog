@@ -368,9 +368,8 @@ public class UserController {
 				.filter(user -> (district == null || district.isEmpty()
 						|| user.getDistrict().equalsIgnoreCase(district)))
 				.filter(user -> (state == null || state.isEmpty() || user.getState().equalsIgnoreCase(state)))
-				.filter(user -> (school == null || school.isEmpty() 
-                || (user.getSchool() != null && user.getSchool().getCode() != null 
-                    && user.getSchool().getCode().equals(school))))
+				.filter(user -> (school == null || school.isEmpty() || (user.getSchool() != null
+						&& user.getSchool().getCode() != null && user.getSchool().getCode().equals(school))))
 				.collect(Collectors.toList());
 	}
 
