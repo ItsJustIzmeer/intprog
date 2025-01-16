@@ -30,7 +30,7 @@
 			<div class="main-container">
 				<!-- start of main content -->
 				<div class="box">
-
+					<h2>School List</h2>
 					<div class="program-container">
 						<table class="table table-striped">
 							<thead>
@@ -56,8 +56,9 @@
 											<td>${school.address}</td>
 											<td>${school.district}</td>
 											<td>${school.state}</td>
-											<td><a href="detailEvent/${school.id}"
-												class="details-btn">Edit</a></td>
+											<td><a href="detailSchool/${school.id}"
+												class="details-btn">Details</a></td>
+
 										</tr>
 									</c:forEach>
 								</c:if>
