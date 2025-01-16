@@ -1,0 +1,92 @@
+package com.modal;
+
+import java.util.Map;
+import java.util.UUID;
+
+public class User {
+	private String id,username, email, password,profilePic,status;
+
+	public User() {}
+	
+	public User(String username, String email, String password) {
+		super();
+		this.setId(UUID.randomUUID().toString());
+		this.setStatus("A"); //A-active, D-deleted,B-banned
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.profilePic = "profile_pic";
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getRole() {
+		return null;
+	}
+
+	public Boolean hasPermission(String page, String crud) {
+		return null;
+	}
+
+	public void setPermissions(Map<Page, String[]> permissions) {
+	}
+
+	public Map<Page, String[]> getPermissions() {
+		return null;
+	}
+	
+	public String getUername() {
+		return username;
+	}
+
+
+	public String getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(String profilePic) {
+		this.profilePic = profilePic;
+	}
+	
+	public String printPermission() {	
+		return "";
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+}
