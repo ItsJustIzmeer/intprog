@@ -12,7 +12,8 @@
 	href="<c:url value='/resources/font-awesome-4.7.0/css/font-awesome.min.css'/>">
 <link rel="stylesheet"
 	href="<c:url value='/resources/css/systemStyle.css'/>">
-<link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/style.css'/>">
 </head>
 <body>
 	<!-- nav bar page-->
@@ -28,50 +29,14 @@
 				<!-- start of main content -->
 				<div class="box">
 					<div class="program-container">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th>No</th>
-									<th>Equipment ID</th>
-									<th>Equipment Name</th>
-									<th>Brand</th>
-									<th>Amount</th>
-									<th>Action</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:if test="${not empty equipments}">
-									<c:forEach var="equipment" items="${equipments}">
-										<tr>
-											<td></td>
-											<td>${equipment.equipmentId}</td>
-											<td>${equipment.name}</td>
-											<td>${equipment.brand}</td>
-											<td>${equipment.amount}</td>
-											<td><a href="detailEquipment/${equipment.id}"
-												class="details-btn">Details</a><a
-												href="editEquipment/${equipment.id}" class="details-btn">Edit</a></td>
-										</tr>
-									</c:forEach>
-								</c:if>
-								<c:if test="${empty equipments}">
-									<tr>
-										<td colspan="6" style="text-align: center; color: red;">No
-											equipments found.</td>
-									</tr>
-								</c:if>
-							</tbody>
-						</table>
-					</div>
-					<div class="program-container">
 						<div class="toolbar">
 							<div class="toolbar-left">
 								<h2>List of Equipment</h2>
 							</div>
 							<div class="toolbar-right">
 								<a href="createReport" class="btn btn-success">Generate
-									Report</a> <a href="addEquipment" class="btn btn-success-event">+
-									Add New Equipment</a>
+									Report</a> <a href="addEquipment"
+									class="btn btn-success-event">+ Add New Equipment</a>
 							</div>
 						</div>
 						<div class="toolbar">

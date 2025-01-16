@@ -10,17 +10,17 @@ public class SchoolDatabase {
 
 	// Initialize schools
 	static {
-		School school1 = new School("SMK Taman Universiti", "JEA1049", "Secondary", 1, 1079, 109, "Encik Azman",
+		School school1 = new School("SMK Taman Universiti", "JEA1049", "Secondary", 1, 0, 0, "Encik Azman",
 				"0193515096", "Jalan Pendidikan, Taman Universiti", "Skudai", "Johor");
-		School school2 = new School("SMK Taman Bukit Indah", "JEA1050", "Secondary", 2, 1239, 111, "Encik Osman",
+		School school2 = new School("SMK Taman Bukit Indah", "JEA1050", "Secondary", 2, 0, 0, "Encik Osman",
 				"0193515096", "Jalan Sri Skudai, Taman Sri Skudai", "Skudai", "Johor");
-		School school3 = new School("SMK Taman Mutiara Rini 2", "JEA1051", "Secondary", 2, 1583, 90, "Encik Zafri",
+		School school3 = new School("SMK Taman Mutiara Rini 2", "JEA1052", "Secondary", 2, 0, 0, "Encik Zafri",
 				"0193515096", "Jalan Hang Jebat, Mutiara Rini", "Skudai", "Johor");
-		School school4 = new School("SMK Taman Tanjung Pengelih", "JEA1051", "Secondary", 3, 1530, 82, "Encik Fadz",
+		School school4 = new School("SMK Taman Tanjung Pengelih", "JEA1053", "Secondary", 3, 0, 0, "Encik Fadz",
 				"0193515096", "Tanjung Pengelih", "Skudai", "Johor");
-		School school5 = new School("SMK Tasek Utara 2", "JEA1051", "Secondary", 1, 600, 50, "Encik Daus", "0193515096",
+		School school5 = new School("SMK Tasek Utara 2", "JEA1054", "Secondary", 1, 0, 0, "Encik Daus", "0193515096",
 				"Jalan Taruka, Kampung Muafakat", "Skudai", "Johor");
-		School school6 = new School("SMK Sri Tebrau", "JEA1051", "Secondary", 4, 786, 58, "Encik Thaqif", "0193515096",
+		School school6 = new School("SMK Sri Tebrau", "JEA1055", "Secondary", 4, 0, 0, "Encik Thaqif", "0193515096",
 				"Jalan Rentaka, Taman Sri Tebrau", "Skudai", "Johor");
 
 		schoolList.add(school1);

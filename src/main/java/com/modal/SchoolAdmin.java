@@ -35,6 +35,29 @@ public class SchoolAdmin extends User {
 		this.permissions.put(pageDatabase.get("User Permission"), new String[] { "Read", "Update" });
 
 	}
+	
+	public SchoolAdmin(String username, String email, String password,String phoneNum,String address,String district,String state) {
+		super(username, email, password,phoneNum,address,district,state);
+		role = "school admin";
+		this.permissions = new LinkedHashMap<>();
+
+		// Access the page database
+		Map<String, Page> pageDatabase = PageDatabase.getPageDatabase();
+
+		// Assign permissions for the school admin role
+		this.permissions.put(pageDatabase.get("Dashboard"), new String[] { "Read" });
+		this.permissions.put(pageDatabase.get("School Information"), new String[] { "Read", "Update"});
+		this.permissions.put(pageDatabase.get("Event"), new String[] { "Create", "Read", "Update", "Delete" });
+		
+		this.permissions.put(pageDatabase.get("Manage Equipment"), new String[] { "Read", "Update", "Delete" });
+		this.permissions.put(pageDatabase.get("Request Equipment"), new String[] { "Create", "Read", "Delete" });
+		this.permissions.put(pageDatabase.get("Level Upgrade Application"),
+				new String[] { "Create", "Read", "Delete" });
+		this.permissions.put(pageDatabase.get("User Management"),
+				new String[] { "Create", "Read", "Update", "Delete" });
+		this.permissions.put(pageDatabase.get("User Permission"), new String[] { "Read", "Update" });
+
+	}
 
 	@Override
 	public String getRole() {
@@ -92,5 +115,16 @@ public class SchoolAdmin extends User {
 	@Override
 	public Map<Page, String[]> getPermissions() {
 		return permissions;
+	}
+	
+	@Override
+	public void setSchool(School school) {
+		if(super.getSchool() != null) {
+			int prev_tot = super.getSchool().getTotalTeacher() - 1;
+			super.getSchool().setTotalTeacher(prev_tot);
+		}
+		int total_student = school.getTotalTeacher() + 1;
+		school.setTotalTeacher(total_student);
+		super.setSchool(school);
 	}
 }

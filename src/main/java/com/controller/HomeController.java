@@ -59,6 +59,9 @@ public class HomeController {
 
 		// get data list
 		modelAndView.addObject("userList", userController.getUserGridTable(request));
+		
+		List<School> schools = SchoolDatabase.getSchoolDatabase();
+		modelAndView.addObject("schools" , schools);
 
 		return modelAndView;
 	}
@@ -81,16 +84,28 @@ public class HomeController {
 		String password = request.getParameter("password");
 		String status = request.getParameter("status");
 		String role = request.getParameter("role");
+		String phoneNum = request.getParameter("phoneNum");
+		String address = request.getParameter("address");
+		String district = request.getParameter("district");
+		String state = request.getParameter("state");
+		String schoolinput = request.getParameter("school");
 		int input = 0;
 		String error_msg = "";
 		String success_msg = "";
+		
+		School school = new School();
+		for(School s:SchoolDatabase.getSchoolDatabase()) {
+			if(s.getCode().equals(schoolinput)) {
+				school = s;
+			}
+		}
 
 		// Process action and update the user list in the model
 		switch (action) {
 		case "create":
 			error_msg = userController.validateExistUser(username, email, role);
 			if (error_msg == "") {
-				if (!userController.createUser(role, username, email, password)) {
+				if (!userController.createUser(role, username, email, password,phoneNum,address,district,state,school)) {
 					model.addAttribute("error_msg", "Error on creating user");
 				} else {
 					success_msg = "User created into database successfully.";
@@ -118,6 +133,26 @@ public class HomeController {
 			}
 			if (role != null) {
 				model.addAttribute("role", role);
+				input++;
+			}
+			if (phoneNum != null) {
+				model.addAttribute("phoneNum", phoneNum);
+				input++;
+			}
+			if (address != null) {
+				model.addAttribute("address", address);
+				input++;
+			}
+			if (district != null) {
+				model.addAttribute("district", district);
+				input++;
+			}
+			if (state != null) {
+				model.addAttribute("state", state);
+				input++;
+			}
+			if (schoolinput != null) {
+				model.addAttribute("school", schoolinput);
 				input++;
 			}
 
@@ -154,6 +189,8 @@ public class HomeController {
 			break;
 		}
 
+		List<School> schools = SchoolDatabase.getSchoolDatabase();
+		model.addAttribute("schools" , schools);
 		return new ModelAndView(view, model);
 	}
 
@@ -175,6 +212,8 @@ public class HomeController {
 		// get data list
 		modelAndView.addObject("userList", userController.getUserGridTable(request));
 
+		List<School> schools = SchoolDatabase.getSchoolDatabase();
+		modelAndView.addObject("schools" , schools);
 		return modelAndView;
 	}
 
@@ -308,6 +347,8 @@ public class HomeController {
 			break;
 		}
 
+		List<School> schools = SchoolDatabase.getSchoolDatabase();
+		model.addAttribute("schools" , schools);
 		return new ModelAndView(view, model);
 	}
 

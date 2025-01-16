@@ -22,6 +22,20 @@ public class Student extends User {
 		this.permissions.put(pageDatabase.get("School Information"), new String[] { "Read"});
 		this.permissions.put(pageDatabase.get("Event"), new String[] { "Read" });
 	}
+	
+	public Student(String username, String email, String password,String phoneNum,String address,String district,String state) {
+		super(username, email, password,phoneNum,address,district,state);
+		role = "student";
+		this.permissions = new LinkedHashMap<>();
+
+		// Access the page database
+		Map<String, Page> pageDatabase = PageDatabase.getPageDatabase();
+
+		// Assign permissions for the student role
+		this.permissions.put(pageDatabase.get("Dashboard"), new String[] { "Read" });
+		this.permissions.put(pageDatabase.get("School Information"), new String[] { "Read"});
+		this.permissions.put(pageDatabase.get("Event"), new String[] { "Read" });
+	}
 
 	@Override
 	public String getRole() {
@@ -57,5 +71,16 @@ public class Student extends User {
 	@Override
 	public void setPermissions(Map<Page, String[]> permissions) {
 		this.permissions = permissions;
+	}
+	
+	@Override
+	public void setSchool(School school) {
+		if(super.getSchool() != null) {
+			int prev_tot = super.getSchool().getTotalStudent() - 1;
+			super.getSchool().setTotalStudent(prev_tot);
+		}
+		int total_student = school.getTotalStudent() + 1;
+		school.setTotalStudent(total_student);
+		super.setSchool(school);
 	}
 }

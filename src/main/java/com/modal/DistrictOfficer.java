@@ -27,6 +27,24 @@ public class DistrictOfficer extends User {
 		this.permissions.put(pageDatabase.get("User Permission"), new String[] { "Read", "Update" });
 	}
 
+	public DistrictOfficer(String username, String email, String password,String phoneNum,String address,String district,String state) {
+		super(username, email, password,phoneNum,address,district,state);
+		role = "district officer";
+		this.permissions = new LinkedHashMap<>();
+
+		// Access the page database
+		Map<String, Page> pageDatabase = PageDatabase.getPageDatabase();
+
+		// Assign permissions for the district officer role
+		this.permissions.put(pageDatabase.get("Dashboard"), new String[] { "Read" });
+		this.permissions.put(pageDatabase.get("Manage School"), new String[] { "Read", "Update" });
+		this.permissions.put(pageDatabase.get("Manage Event Application"), new String[] { "Read", "Update" });
+		this.permissions.put(pageDatabase.get("Manage Request Equipment"),new String[] { "Read","Update"});
+		this.permissions.put(pageDatabase.get("Manage Level Application"),new String[] { "Read","Update"});
+		this.permissions.put(pageDatabase.get("User Management"), new String[] { "Create", "Read", "Update", "Delete" });
+		this.permissions.put(pageDatabase.get("User Permission"), new String[] { "Read", "Update" });
+	}
+	
 	@Override
 	public String getRole() {
 		return role;

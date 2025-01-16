@@ -18,6 +18,7 @@ public class School {
 
 	public School() {
 		this.id = UUID.randomUUID().toString();
+		this.code = null; // to prevent error.
 	}
 
 	public School(String name, String code, String type, int version, int totalStudent, int totalTeacher,

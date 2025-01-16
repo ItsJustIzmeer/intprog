@@ -4,18 +4,33 @@ import java.util.Map;
 import java.util.UUID;
 
 public class User {
-	private String id,username, email, password,profilePic,status;
+	private String id,username, email, password,profilePic,status,phoneNum,address,district,state;
+	private School school = new School();
 
 	public User() {}
 	
 	public User(String username, String email, String password) {
 		super();
 		this.setId(UUID.randomUUID().toString());
-		this.setStatus("A"); //A-active, D-deleted,B-banned
+		this.setStatus("A"); //A-active,B-banned
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.profilePic = "profile_pic";
+	}
+	
+	public User(String username,String email,String password,String phoneNum,String address,String district,String state) {
+		super();
+		this.setId(UUID.randomUUID().toString());
+		this.setStatus("A");
+		this.profilePic = "profile_pic"; //cannot change.
+		this.username = username;
+		this.email= email;
+		this.password = password;
+		this.phoneNum = phoneNum;
+		this.address = address;
+		this.district = district;
+		this.state = state;
 	}
 
 	public String getUsername() {
@@ -88,5 +103,45 @@ public class User {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public School getSchool() {
+		return school;
+	}
+
+	public void setSchool(School school) {
+		this.school = school;
 	}
 }

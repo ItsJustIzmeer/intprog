@@ -177,8 +177,7 @@ hr {
 												<td>Email</td>
 												<td>:</td>
 												<td><input type="email" name="email" id="email"
-													value="${email != null ? email : ''}"
-													oninput="checkSchoolDatabase(this.value)" /></td>
+													value="${email != null ? email : ''}" /></td>
 											</tr>
 											<tr id="password">
 												<td>Password</td>
@@ -192,6 +191,30 @@ hr {
 												<td><input type="password" name="c_password"
 													id="in_c_password" value="" /></td>
 											</tr>
+											<tr>
+												<td>Phone Number</td>
+												<td>:</td>
+												<td><input type="text" name="phoneNum" id="phoneNum"
+													value="${phoneNum != null ? phoneNum : ''}" /></td>
+											</tr>
+											<tr>
+												<td>Address</td>
+												<td>:</td>
+												<td><input type="text" name="address" id="address"
+													value="${address != null ? address : ''}" /></td>
+											</tr>
+											<tr>
+												<td>District</td>
+												<td>:</td>
+												<td><input type="text" name="district" id="district"
+													value="${district != null ? district : ''}" /></td>
+											</tr>
+											<tr>
+												<td>State</td>
+												<td>:</td>
+												<td><input type="text" name="state" id="state"
+													value="${state != null ? state : ''}" /></td>
+											</tr>
 										</table>
 									</td>
 									<td width="50%" style="align-content: start">
@@ -204,7 +227,6 @@ hr {
 															<option value="">All</option>
 															<option value="A" ${status == 'A' ? 'selected' : ''}>Active</option>
 															<option value="B" ${status == 'B' ? 'selected' : ''}>Banned</option>
-															<option value="D" ${status == 'D' ? 'selected' : ''}>Deleted</option>
 													</select></td>
 												</tr>
 												<tr>
@@ -212,21 +234,41 @@ hr {
 													<td>:</td>
 													<td><select name="role" id="role">
 															<option value="">All</option>
-															<option value="S"
-																${status == 'student' ? 'selected' : ''}>Student</option>
-															<option value="A"
-																${status == 'school admin' ? 'selected' : ''}>School
+															<option value="student"
+																${role == 'student' ? 'selected' : ''}>Student</option>
+															<option value="school admin"
+																${role == 'school admin' ? 'selected' : ''}>School
 																Admin</option>
 															<c:if
 																test="${sessionScope.user.role == 'district officer'}">
-																<option value="D"
-																	${status == 'district officer' ? 'selected' : ''}>District</option>
+																<option value="district officer"
+																	${role == 'district officer' ? 'selected' : ''}>District</option>
 															</c:if>
 													</select></td>
 												</tr>
 												<tr>
-													<td colspan="3"><span id="schoolMessage"
-														style="color: green;">&nbsp;</span></td>
+													<td>School</td>
+													<td>:</td>
+													<td><select name="school" id="school">
+															<c:choose>
+																<c:when
+																	test="${sessionScope.user.role == 'district officer'}">
+																	<option value="">Select school</option>
+																	<c:forEach var="schoolv" items="${schools}">
+																		<option value="${schoolv.code}"
+																			${school == schoolv.code ? 'selected' : ''}>${schoolv.name}</option>
+																	</c:forEach>
+																</c:when>
+																<c:when
+																	test="${sessionScope.user.role == 'school admin'}">
+																	<option value="${sessionScope.user.school.code}"
+																		selected>${sessionScope.user.school.name}</option>
+																</c:when>
+																<c:otherwise>
+																	<option value="">Access not permitted.</option>
+																</c:otherwise>
+															</c:choose>
+													</select></td>
 												</tr>
 											</table>
 										</div>
@@ -243,6 +285,7 @@ hr {
 								<td class="title">Action</td>
 								<td class="title">Name</td>
 								<td class="title">Email</td>
+								<td class="title">School</td>
 								<td class="title">Role</td>
 								<td class="title">Status</td>
 							</tr>
@@ -253,7 +296,7 @@ hr {
 									<tr id="row_${user.id}">
 										<td><c:if test="${update}">
 												<button class="edit_button" id="edit_button_${user.id }"
-													onclick="editUser('${user.id}', '${user.username}', '${user.email}', '${user.status}', '${user.role}')">
+													onclick="editUser('${user.id}', '${user.username}', '${user.email}', '${user.status}', '${user.role}', '${user.phoneNum}', '${user.address}', '${user.district}', '${user.state}', '${user.school.code}')">
 													<i class="fa fa-pencil"></i>
 												</button>
 											</c:if> <c:if test="${delete && sessionScope.user.id ne user.id}">
@@ -264,6 +307,7 @@ hr {
 											</c:if></td>
 										<td>${user.username}</td>
 										<td>${user.email}</td>
+										<td>${user.school.name }</td>
 										<td>${user.role}</td>
 										<td><c:choose>
 												<c:when test="${user.status == 'A'}">Active</c:when>
@@ -288,10 +332,6 @@ hr {
 		</div>
 	</main>
 	<script>
-		var schoolDatabase = {
-			"utm" : "University Technology Malaysia",
-			"upm" : "Universiti Putra Malaysia"
-		};
 		var currMode = "firstLoad";
 
 		// Function to change mode
@@ -411,6 +451,11 @@ hr {
 	        var cPassword = document.getElementById('in_c_password').value;
 	        var status = document.getElementById('status').value;
 	        var role = document.getElementById('role').value;
+	        var phoneNum = document.getElementById('phoneNum').value;
+	        var address = document.getElementById('address').value;
+	        var district = document.getElementById('district').value;
+	        var state = document.getElementById('state').value;
+	        var school = document.getElementById('school').value;
 	        var errorMessage = "";
 
 	        // validation
@@ -435,6 +480,23 @@ hr {
 	        if (role === ""){
 	        	errorMessage += "Role cannot be empty.\n";
 	        }
+	        if (phoneNum === ""){
+	        	errorMessage += "Phone Number cannot be empty.\n";
+	        }
+	        if (address === ""){
+	        	errorMessage += "Address cannot be empty.\n";
+	        }
+	        if (district === ""){
+	        	errorMessage += "District cannot be empty.\n";
+	        }
+	        if (state === ""){
+	        	errorMessage += "State cannot be empty.\n";
+	        }
+	        if (school === ""){
+	        	if(role != "district officer"){
+	        	errorMessage += "School cannot be empty.\n";
+	        	}
+	        }
 
 	        // If there's any validation error, alert the user and prevent form submission
 	        if (errorMessage !== "") {
@@ -445,36 +507,24 @@ hr {
 	        }
 	    }
 	
-
-		// update School Detected Message while user input email
-		function checkSchoolDatabase(email) {
-			const schoolMessage = document.getElementById('schoolMessage');
-
-			// Loop through the array of objects
-			for ( var shortName in schoolDatabase) {
-				if (email.toLowerCase().includes(shortName.toLowerCase())) {
-					schoolMessage.textContent = "Matched School: "
-							+ schoolDatabase[shortName];
-					return; // Stop once a match is found
-				}
-			}
-
-			// If no match is found, clear the message
-			schoolMessage.textContent = 'No School Detected';
-		}
 		
 		function validateEmail(email) {
 	        var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 	        return re.test(email);
 	    }
 
-		function editUser(userId, username, email, status, role) {
+		function editUser(userId, username, email, status, role,phoneNum,address,district,state,school) {
 			changeMode('updatemode');
 		    // Populate the form fields with the user data
 		    document.getElementById('username').value = username;
 		    document.getElementById('email').value = email;
 		    document.getElementById('status').value = status;
-		    document.getElementById('role').value = (role == "student"? "S":role=="school admin"?"A":"D");
+		    document.getElementById('role').value = role;
+		    document.getElementById('phoneNum').value = phoneNum;
+		    document.getElementById('address').value = address;
+		    document.getElementById('district').value = district;
+		    document.getElementById('state').value = state;
+		    document.getElementById('school').value = school;
 
 		    document.getElementById('in_password').value = ""; 
 		    document.getElementById('in_c_password').value = ""; 
