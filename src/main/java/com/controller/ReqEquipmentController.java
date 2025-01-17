@@ -10,97 +10,97 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.modal.Equipment;
-import com.repository.EquipmentDatabase;
+import com.modal.ReqEquipment;
+import com.repository.ReqEquipmentDatabase;
 
 @Controller
-public class EquipmentController {
+public class ReqEquipmentController {
 
     // Display the list of equipments
-    @GetMapping("/equipment")
+    @GetMapping("/requestequipment")
     public ModelAndView listEvents(ModelMap model, HttpServletRequest request) {
-        List<Equipment> equipments = EquipmentDatabase.getEquipmentDatabase();
-        model.addAttribute("equipments", equipments);
-        return new ModelAndView("/equipment",model);
+        List<ReqEquipment> reqEquipments = ReqEquipmentDatabase.getReqEquipmentDatabase();
+        model.addAttribute("reqEquipments", reqEquipments);
+        return new ModelAndView("/requestequipment",model);
     }
 
     // Show the create equipment form
-    @GetMapping("/createEquipment")
+    @GetMapping("/createReqEquipment")
     public String createEquipmentForm() {
         return "createEquipment";
     }
 
 
     // Handle equipment creation
-    @PostMapping("/createEquipment")
-    public ModelAndView createEquipment(HttpServletRequest request) {
-    	ModelAndView mdv = new ModelAndView("Equipment");
+    @PostMapping("/createReqEquipment")
+    public ModelAndView createReqEquipment(HttpServletRequest request) {
+    	ModelAndView mdv = new ModelAndView("ReqEquipment");
     	
-        Equipment newEquipment = new Equipment();
-        newEquipment.setEquipmentId(request.getParameter("equipmentId"));
-        newEquipment.setName(request.getParameter("equipmentName"));
-        newEquipment.setBrand(request.getParameter("equipmentBrand"));
-        newEquipment.setAmount(Integer.parseInt(request.getParameter("equipmentAmount")));
+        ReqEquipment newReqEquipment = new ReqEquipment();
+        newReqEquipment.setEquipmentId(request.getParameter("equipmentId"));
+        newReqEquipment.setName(request.getParameter("reqEquipmentName"));
+        newReqEquipment.setBrand(request.getParameter("reqEquipmentBrand"));
+        newReqEquipment.setAmount(Integer.parseInt(request.getParameter("reqEquipmentAmount")));
 
-        EquipmentDatabase.addEquipment(newEquipment);
-        mdv.addObject("events",EquipmentDatabase.getEquipmentDatabase());
-        mdv.addObject("success_msg","Equipment has been successfully created.");
+        ReqEquipmentDatabase.addReqEquipment(newReqEquipment);
+        mdv.addObject("events",ReqEquipmentDatabase.getReqEquipmentDatabase());
+        mdv.addObject("success_msg","Request Equipment has been successfully created.");
         return mdv;
     }
 
     // Show the event details for editing
-    @GetMapping("/detailEquipment/{id}")
-    public String equipmentDetails(@PathVariable String id, Model model) {
-        Equipment equipment = EquipmentDatabase.getEquipmentById(id);
-        model.addAttribute("equipment", equipment);
-        return "detailEquipment";
+    @GetMapping("/requestEquipment/{id}")
+    public String reqEquipmentDetails(@PathVariable String id, Model model) {
+        ReqEquipment reqEquipment = ReqEquipmentDatabase.getReqEquipmentById(id);
+        model.addAttribute("reqEquipment", reqEquipment);
+        return "requestEquipment";
     }
 
  // Handle event update
-    @PostMapping("/editEquipment")
-    public ModelAndView editEquipment(ModelMap model, HttpServletRequest request) {
+    @PostMapping("/editRequestEquipment")
+    public ModelAndView editReqEquipment(ModelMap model, HttpServletRequest request) {
         String id = request.getParameter("id");
-        Equipment updatedEquipment = new Equipment();
-        updatedEquipment.setId(id);
-        updatedEquipment.setEquipmentId(request.getParameter("equipmentId"));
-        updatedEquipment.setName(request.getParameter("equipmentName"));
-        updatedEquipment.setBrand(request.getParameter("equipmentBrand"));
-        updatedEquipment.setAmount(Integer.parseInt(request.getParameter("equipmentAmount")));
+        ReqEquipment updatedReqEquipment = new ReqEquipment();
+        updatedReqEquipment.setId(id);
+        updatedReqEquipment.setEquipmentId(request.getParameter("equipmentId"));
+        updatedReqEquipment.setName(request.getParameter("reqEquipmentName"));
+        updatedReqEquipment.setBrand(request.getParameter("reqEquipmentBrand"));
+        updatedReqEquipment.setAmount(Integer.parseInt(request.getParameter("reqEquipmentAmount")));
 
-        boolean isUpdated = EquipmentDatabase.updateEquipment(id, updatedEquipment);
+        boolean isUpdated = ReqEquipmentDatabase.updateReqEquipment(id, updatedReqEquipment);
         
-        List<Equipment> equipments = EquipmentDatabase.getEquipmentDatabase();
-        model.addAttribute("equipments", equipments);
+        List<ReqEquipment> reqEquipments = ReqEquipmentDatabase.getReqEquipmentDatabase();
+        model.addAttribute("reqEquipments", reqEquipments);
 
-        ModelAndView modelAndView = new ModelAndView("Equipment");
+        ModelAndView modelAndView = new ModelAndView("ReqEquipment");
         if (isUpdated) {
-            modelAndView.addObject("success_msg", "Equipment updated successfully!");
+            modelAndView.addObject("success_msg", "Request Equipment updated successfully!");
         } else {
-            modelAndView.addObject("error_msg", "Failed to update equipment.");
+            modelAndView.addObject("error_msg", "Failed to update request equipment.");
         }
         return modelAndView;
     }
 
 
  /// Handle event deletion
-    @PostMapping("/deleteEquipment")
+    @PostMapping("/deleteRequestEquipment")
     public ModelAndView deleteEquipment(@RequestParam String id) {
         // Create a ModelAndView instance
-        ModelAndView modelAndView = new ModelAndView("Equipment");
+        ModelAndView modelAndView = new ModelAndView("ReqEquipment");
 
         // Delete the event
-        boolean success = EquipmentDatabase.deleteEquipment(id);
+        boolean success = ReqEquipmentDatabase.deleteReqEquipment(id);
 
         // Add attributes to the model
         if (success) {
-            modelAndView.addObject("message", "Equipment deleted successfully.");
+            modelAndView.addObject("message", "Request equipment deleted successfully.");
         } else {
-            modelAndView.addObject("message", "Failed to delete the equipment.");
+            modelAndView.addObject("message", "Failed to delete the request equipment.");
         }
 
         // Fetch the updated event data to pass back to the view
-        List<Equipment> equipments = EquipmentDatabase.getEquipmentDatabase();
-        modelAndView.addObject("equipments", equipments);
+        List<ReqEquipment> reqEquipments = ReqEquipmentDatabase.getReqEquipmentDatabase();
+        modelAndView.addObject("reqEquipments", reqEquipments);
 
         // Return the ModelAndView object
         return modelAndView;
